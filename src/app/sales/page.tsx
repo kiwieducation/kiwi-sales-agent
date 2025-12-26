@@ -59,10 +59,7 @@ export default function SalesHome() {
     setLoading(false);
   }
 
-  useEffect(() => {
-    load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useEffect(() => { load(); }, []);
 
   async function logout() {
     await supabase.auth.signOut();
@@ -88,14 +85,7 @@ export default function SalesHome() {
     if (error) return alert(error.message);
 
     setOpen(false);
-    setForm({
-      name: "",
-      grade: "",
-      age: "",
-      school_type: "",
-      target_country: "",
-      stage: "new",
-    });
+    setForm({ name: "", grade: "", age: "", school_type: "", target_country: "", stage: "new" });
     await load();
   }
 
@@ -104,33 +94,13 @@ export default function SalesHome() {
       <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "center" }}>
         <div>
           <h1 style={{ fontSize: 22, fontWeight: 900 }}>销售顾问工作台</h1>
-          <div style={{ marginTop: 6, color: "#6b7280", fontSize: 13 }}>
-            {me?.email ? `当前账号：${me.email}` : ""}
-          </div>
+          <div style={{ marginTop: 6, color: "#6b7280", fontSize: 13 }}>{me?.email ? `当前账号：${me.email}` : ""}</div>
         </div>
         <div style={{ display: "flex", gap: 10 }}>
-          <button
-            onClick={() => setOpen(true)}
-            style={{
-              padding: "10px 12px",
-              borderRadius: 10,
-              border: "1px solid #111827",
-              background: "#111827",
-              color: "white",
-              fontWeight: 800,
-            }}
-          >
+          <button onClick={() => setOpen(true)} style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid #111827", background: "#111827", color: "white", fontWeight: 900 }}>
             新建客户
           </button>
-          <button
-            onClick={logout}
-            style={{
-              padding: "10px 12px",
-              borderRadius: 10,
-              border: "1px solid #d1d5db",
-              background: "white",
-            }}
-          >
+          <button onClick={logout} style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db", background: "white" }}>
             退出登录
           </button>
         </div>
@@ -145,29 +115,14 @@ export default function SalesHome() {
         ) : (
           <div style={{ display: "grid", gap: 10 }}>
             {leads.map((l) => (
-              <Link
-                key={l.id}
-                href={`/sales/leads/${l.id}`}
-                style={{
-                  textDecoration: "none",
-                  color: "inherit",
-                  border: "1px solid #e5e7eb",
-                  borderRadius: 14,
-                  padding: 12,
-                  display: "flex",
-                  justifyContent: "space-between",
-                  gap: 10,
-                }}
-              >
+              <Link key={l.id} href={`/sales/leads/${l.id}`} style={{ textDecoration: "none", color: "inherit", border: "1px solid #e5e7eb", borderRadius: 14, padding: 12, display: "flex", justifyContent: "space-between", gap: 10 }}>
                 <div>
                   <div style={{ fontWeight: 900 }}>{l.name}</div>
                   <div style={{ marginTop: 4, fontSize: 13, color: "#6b7280" }}>
                     {l.target_country ? `意向：${l.target_country}` : "意向：未填写"} · {stageLabel[l.stage]}
                   </div>
                 </div>
-                <div style={{ fontSize: 12, color: "#6b7280" }}>
-                  {new Date(l.created_at).toLocaleString()}
-                </div>
+                <div style={{ fontSize: 12, color: "#6b7280" }}>{new Date(l.created_at).toLocaleString()}</div>
               </Link>
             ))}
           </div>
@@ -175,70 +130,24 @@ export default function SalesHome() {
       </div>
 
       {open ? (
-        <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,0.35)",
-            display: "grid",
-            placeItems: "center",
-            padding: 16,
-          }}
-        >
+        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.35)", display: "grid", placeItems: "center", padding: 16 }}>
           <div style={{ width: "min(560px, 96vw)", background: "white", borderRadius: 16, border: "1px solid #e5e7eb", padding: 16 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <div style={{ fontWeight: 900 }}>新建客户</div>
-              <button
-                onClick={() => setOpen(false)}
-                style={{
-                  border: "1px solid #e5e7eb",
-                  background: "white",
-                  borderRadius: 10,
-                  padding: "6px 10px",
-                }}
-              >
+              <button onClick={() => setOpen(false)} style={{ border: "1px solid #e5e7eb", background: "white", borderRadius: 10, padding: "6px 10px" }}>
                 关闭
               </button>
             </div>
 
             <div style={{ marginTop: 12, display: "grid", gap: 10 }}>
-              <input
-                placeholder="客户姓名（必填）"
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                style={{ padding: 10, border: "1px solid #d1d5db", borderRadius: 10 }}
-              />
+              <input placeholder="客户姓名（必填）" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} style={{ padding: 10, border: "1px solid #d1d5db", borderRadius: 10 }} />
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-                <input
-                  placeholder="年级（如 G10 / 大一）"
-                  value={form.grade}
-                  onChange={(e) => setForm({ ...form, grade: e.target.value })}
-                  style={{ padding: 10, border: "1px solid #d1d5db", borderRadius: 10 }}
-                />
-                <input
-                  placeholder="年龄"
-                  value={form.age}
-                  onChange={(e) => setForm({ ...form, age: e.target.value })}
-                  style={{ padding: 10, border: "1px solid #d1d5db", borderRadius: 10 }}
-                />
+                <input placeholder="年级（如 G10 / 大一）" value={form.grade} onChange={(e) => setForm({ ...form, grade: e.target.value })} style={{ padding: 10, border: "1px solid #d1d5db", borderRadius: 10 }} />
+                <input placeholder="年龄" value={form.age} onChange={(e) => setForm({ ...form, age: e.target.value })} style={{ padding: 10, border: "1px solid #d1d5db", borderRadius: 10 }} />
               </div>
-              <input
-                placeholder="高中类型（普高/国际/A-Level/IB/AP）"
-                value={form.school_type}
-                onChange={(e) => setForm({ ...form, school_type: e.target.value })}
-                style={{ padding: 10, border: "1px solid #d1d5db", borderRadius: 10 }}
-              />
-              <input
-                placeholder="意向国家（如 美国/英国/加拿大）"
-                value={form.target_country}
-                onChange={(e) => setForm({ ...form, target_country: e.target.value })}
-                style={{ padding: 10, border: "1px solid #d1d5db", borderRadius: 10 }}
-              />
-              <select
-                value={form.stage}
-                onChange={(e) => setForm({ ...form, stage: e.target.value as any })}
-                style={{ padding: 10, border: "1px solid #d1d5db", borderRadius: 10 }}
-              >
+              <input placeholder="高中类型（普高/国际/A-Level/IB/AP）" value={form.school_type} onChange={(e) => setForm({ ...form, school_type: e.target.value })} style={{ padding: 10, border: "1px solid #d1d5db", borderRadius: 10 }} />
+              <input placeholder="意向国家（如 美国/英国/加拿大）" value={form.target_country} onChange={(e) => setForm({ ...form, target_country: e.target.value })} style={{ padding: 10, border: "1px solid #d1d5db", borderRadius: 10 }} />
+              <select value={form.stage} onChange={(e) => setForm({ ...form, stage: e.target.value as any })} style={{ padding: 10, border: "1px solid #d1d5db", borderRadius: 10 }}>
                 <option value="new">新线索</option>
                 <option value="consulting">咨询中</option>
                 <option value="proposal">方案中</option>
@@ -246,18 +155,7 @@ export default function SalesHome() {
                 <option value="lost">已流失</option>
               </select>
 
-              <button
-                disabled={!canCreate}
-                onClick={createLead}
-                style={{
-                  padding: 10,
-                  borderRadius: 10,
-                  border: "1px solid #111827",
-                  background: canCreate ? "#111827" : "#9ca3af",
-                  color: "white",
-                  fontWeight: 900,
-                }}
-              >
+              <button disabled={!canCreate} onClick={createLead} style={{ padding: 10, borderRadius: 10, border: "1px solid #111827", background: canCreate ? "#111827" : "#9ca3af", color: "white", fontWeight: 900 }}>
                 创建
               </button>
 
